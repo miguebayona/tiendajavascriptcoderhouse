@@ -1,4 +1,4 @@
-const iva = 19%;
+const iva = 0.19;
 const carrito = [];
 
 /*clase producto*/
