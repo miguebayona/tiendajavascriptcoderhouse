@@ -1,0 +1,31 @@
+div {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    padding: 15px;
+    p {
+        font-size: 20px;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+}
+body{
+    background-color: whitesmoke;
+    padding: 20px;
+    main{
+        .carousel{
+            margin: 30px;
+            width: 50%;
+            height: 30%;
+            display: flex;
+            -ms-flex-align: center;
+        }
+    }
+}  
+
+@media screen and (max-width: 600px) {
+    body{
+        background-color: rgb(255, 0, 0);
+        width: 100%;
+    }
+}
