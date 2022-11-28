@@ -1,8 +1,0 @@
-[
-    {"id": 1, "nombre": "CamisaLocalDelJunior", "categoria": "camisaDelJunior", "descripcion": "Camisa local del Junior de Barranquilla","imagen": "./img/Camisa Junior.webp","miniatura": "./img/Camisa Junior.webp","precio": 200.000,"stock": 70},
-    {"id": 2, "nombre": "camisaVisitanteDelJunior", "categoria": "camisaDelJunior", "descripcion": "Camisa Visitante del Junior de Barranquilla.", "imagen": "./img/Camisa Visitante.webp","miniatura": "./img/Camisa Visitante.webp","precio": 210.000,"stock": 40},
-    {"id": 3, "nombre": "camisaDelLiverpoolLuisDiaz", "categoria": "camisaDelLiverpool", "descripcion": "Camisa local del Liverpool con el dorsal de Luis Diaz.", "imagen": "./img/Liverpool.jpg","miniatura": "img/Liverpool.jpg","precio": 210.000,"stock": 30},
-    {"id": 4, "nombre": "camisaLocalDeColombia", "categoria": "camisaDeColombia", "descripcion": "Camisa local de la Selección Colombia.", "imagen": "./img/seleccion.webp","miniatura": "./img/seleccion.webp","precio": 200.000,"stock": 60},
-    {"id": 5, "nombre": "camisaVisitanteDeColombia", "categoria": "camisaDeColombia", "descripcion": "Camisa visitante de la Selección Colombia.", "imagen": "./img/Visitante Colombia.webp","miniatura": "./img/Visitante Colombia.webp","precio": 200.000,"stock": 30},
-    {"id": 6, "nombre": "camisaRetroDelJunior", "categoria": "camisaRetroJunior", "descripcion": "Camisa retro del Junior de Barranquilla.", "imagen": "./img/Retro Junior.webp","miniatura": "./img/Retro Junior.webp","precio": 140.000,"stock": 40}
-]
