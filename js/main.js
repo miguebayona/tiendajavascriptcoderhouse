@@ -13,7 +13,6 @@ const validaRango = document.getElementById("error_rango")
 class Producto {
     constructor(nombre, categoria, precio, stock, imagen, miniatura) {
         this.nombre = nombre;
-        this.categoria = categoria;
         this.precio = precio;
         this.stock = stock;
         this.imagen = imagen;
@@ -54,14 +53,6 @@ function valorCarrito(carrito) {
     alert("el valor total de la compra es de: $" + totalCarrito)
     return (totalCarrito)
 }
-/*productos nuevos*/
-const producto1 = new Producto("camisaLocalDelJunior", "camisaDelJunior", "",200.000, 70,);
-const producto2 = new Producto("camisaVisitanteDelJunior", "camisaDelJunior", 210.000, 40);
-const producto3 = new Producto("camisaDelLiverpoolLuisDiaz", "camisaDelLiverpool", 210.000, 30);
-const producto4 = new Producto("camisaLocalDeColombia", "camisaDeColombia", 200.000, 60);
-const producto5 = new Producto("camisaVisitanteDeColombia", "camisadeColombia", "" 200.000, 30);
-const producto6 = new Producto("camisaRetroDelJunior", "camisaRetroJunior", 140.000, 40);
-let listaProductos = JSON.parse(localStorage.getItem("productos")) || [producto1, producto2, producto3, producto4, producto5, producto6]
 
 function cargarProductos(){
     if(JSON.parse(localStorage.getItem("productos")) === null){
@@ -81,7 +72,6 @@ function armarCarrito (lista){
         <img src="${producto.imagen}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">${producto.nombre}</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             <p class="card-text">Precio: ${producto.precio}</p>
             <a class="btn btn-primary" id="comprar${contador}">Comprar</a>
             <input type="button" id="restar${contador}" value="-">
@@ -192,77 +182,65 @@ function sumar(){
         });
 }
 
-function comprar(){
-    let listaFiltros = JSON.parse(localStorage.getItem("productos")) // probar sice 0 de array anterior o spread operator.
-    const botonesComprar = document.querySelectorAll('[id^=comprar]')  // busco todos mis botones de comprar
-    const inputsCantidad = document.querySelectorAll('[id^=cantidad]') // busco todos mis inputs de cantidad
-    const productos = document.querySelectorAll('[id^=prod]')
-    const errores = document.querySelectorAll('[id^=problema]')
+unction comprar() {
+    let listaFiltros = JSON.parse(localStorage.getItem("productos")); // probar sice 0 de array anterior o spread operator.
+    const botonesComprar = document.querySelectorAll('[id^=comprar]');  // busco todos mis botones de comprar
+    const inputsCantidad = document.querySelectorAll('[id^=cantidad]'); // busco todos mis inputs de cantidad
+    const productos = document.querySelectorAll('[id^=prod]');
+    const errores = document.querySelectorAll('[id^=problema]');
 
     botonesComprar.forEach(btn => {                                   // por cada boton restar genero un evento para restar al input correspondiente
-        let idProducto = btn.id.slice(7)    // busco mi id de boton y lo corto para que me de el numero de objeto.
-        let idListaProducto = parseInt(productos[idProducto].id.slice(4))   // busco mi id de producto que corresponde a la lista de productos.
+        let idProducto = btn.id.slice(7);    // busco mi id de boton y lo corto para que me de el numero de objeto.
+        let idListaProducto = parseInt(productos[idProducto].id.slice(4));   // busco mi id de producto que corresponde a la lista de productos.
         //console.log(productos)
         btn.addEventListener('click', event => {    //evento click para comprar
-            carrito = JSON.parse(localStorage.getItem("carrito")) || []
-            if (inputsCantidad[idProducto].value > (listaProductos[listaProductos.findIndex(producto => (producto.id === idListaProducto))].stock)){ //verifico si pido mas de mi stock
-                errores[idProducto].innerHTML = `No tenemos suficiente stock!`
-                console.log("Stock menor a lo pedido!")
-            } else{
-                errores[idProducto].innerHTML = "" //limpio el mensaje de error
-             if(inputsCantidad[idProducto].value > 0){ // verifico que el input no sea 0
-                errores[idProducto].innerHTML = ""
-                 let prodAux = listaFiltros.filter(producto =>producto.id ===  idListaProducto)[0]  // filtro el producto seleccionado y lo guardo en un auxiliar
-                 if (carrito.findIndex(producto => (producto.id === idListaProducto)) >= 0) {   //si el producto ya esta en el carrito sumo stock, si no pusheo un objeto
-                    carrito[carrito.findIndex(producto => (producto.id === idListaProducto))].stock += parseInt(inputsCantidad[idProducto].value) // agrego el stock al carrito
-                    listaProductos[listaProductos.findIndex(producto => (producto.id === idListaProducto))].stock -= parseInt(inputsCantidad[idProducto].value) // disminuyo stock en el producto original
-                    localStorage.setItem("productos",JSON.stringify(listaProductos))
-                    localStorage.setItem("carrito",JSON.stringify(carrito))
-                    mostrarAlerta(prodAux.nombre,inputsCantidad[idProducto].value)
-                } else {    // si el producto no esta en el carrito hago push
-                    listaProductos[listaProductos.findIndex(producto => (producto.id === idListaProducto))].stock -= parseInt(inputsCantidad[idProducto].value) // disminuyo stock en el producto original
-                    prodAux.stock = parseInt(inputsCantidad[idProducto].value) // seteo cuanto stock compro
-                    carrito.push(prodAux)
-                    localStorage.setItem("productos",JSON.stringify(listaProductos))
-                    localStorage.setItem("carrito",JSON.stringify(carrito))
-                    mostrarAlerta(prodAux.nombre,inputsCantidad[idProducto].value)
+            carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            if (inputsCantidad[idProducto].value > (listaProductos[listaProductos.findIndex(producto => (producto.id === idListaProducto))].stock)) { //verifico si pido mas de mi stock
+                errores[idProducto].innerHTML = `No tenemos suficiente stock!`;
+                console.log("Stock menor a lo pedido!");
+            } else {
+                errores[idProducto].innerHTML = ""; //limpio el mensaje de error
+                if (inputsCantidad[idProducto].value > 0) { // verifico que el input no sea 0
+                    errores[idProducto].innerHTML = "";
+                    let prodAux = listaFiltros.filter(producto => producto.id === idListaProducto)[0];  // filtro el producto seleccionado y lo guardo en un auxiliar
+                    if (carrito.findIndex(producto => (producto.id === idListaProducto)) >= 0) {   //si el producto ya esta en el carrito sumo stock, si no pusheo un objeto
+                        carrito[carrito.findIndex(producto => (producto.id === idListaProducto))].stock += parseInt(inputsCantidad[idProducto].value); // agrego el stock al carrito
+                        listaProductos[listaProductos.findIndex(producto => (producto.id === idListaProducto))].stock -= parseInt(inputsCantidad[idProducto].value); // disminuyo stock en el producto original
+                        localStorage.setItem("productos", JSON.stringify(listaProductos));
+                        localStorage.setItem("carrito", JSON.stringify(carrito));
+                        //Notificacion de agregado de producto a carrito
+                        Toastify({
+                            text: `Se agrego ${inputsCantidad[idProducto].value} ${prodAux.nombre} al carrito.`,
+                            close: true
+                        }).showToast();
+                    } else {    // si el producto no esta en el carrito hago push
+                        listaProductos[listaProductos.findIndex(producto => (producto.id === idListaProducto))].stock -= parseInt(inputsCantidad[idProducto].value); // disminuyo stock en el producto original
+                        prodAux.stock = parseInt(inputsCantidad[idProducto].value); // seteo cuanto stock compro
+                        carrito.push(prodAux);
+                        localStorage.setItem("productos", JSON.stringify(listaProductos));
+                        localStorage.setItem("carrito", JSON.stringify(carrito));
+                        //Notificacion de agregado de producto a carrito
+                        Toastify({
+                            text: `Se agrego ${inputsCantidad[idProducto].value} ${prodAux.nombre} al carrito.`,
+                            close: true
+                        }).showToast();
                     }
-                } else{
-                errores[idProducto].innerHTML = `No puedes pedir 0!`
-                }}
-        }); 
+                } else {
+                    errores[idProducto].innerHTML = `No puedes pedir 0!`;
+                }
+            }
         });
+
+    });
 }
 
-filtro.addEventListener("keyup", function (e){     //apretar enter genera la busqueda
+
+filtro.addEventListener("keyup", function (e) {     //con enter se genera la busqueda
     if (e.key === 'Enter') {
-        mostrarProductos()
-      }
+        mostrarProductos();
+    }
 })
 
-btn.addEventListener("click", mostrarProductos) // boton buscar
+btn.addEventListener("click", mostrarProductos) // buscar
 
-/*Funciones para alertas*/
-function mostrarAlerta(producto,cantidad){
-    document.getElementById("alerta").classList.remove("alertaBorrar")  //saco class que deja opacidad 0%.
-                    document.getElementById("alerta").innerHTML = `
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Se agrego ${cantidad} ${producto} al carrito.</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-                    `                                                   // Genero la ventana modal.
-                    document.getElementById("alerta").classList.add("alertaMostrar")// agrego class para mostrar la ventana 100% opacidad.
-                    setTimeout(cerrarAlerta, 3000);                     // luego de 3 segundos borro la ventana modal.
-}
-
-function cerrarAlerta(){
-    document.getElementById("alerta").classList.add("alertaBorrar")
-    setTimeout(borrarAlerta,3000)
-}
-
-function borrarAlerta(){
-    document.getElementById("alerta").innerHTML =""
-}
-
-//setTimeout();
-mostrarProductos()
+obtenerDatos() 
